@@ -48,23 +48,15 @@ const Header = () => {
   return (
     <header className="bg-white">
       {!pathname.startsWith("/admin") && (
-        <div className="h-20 bg-white flex items-center justify-between px-6 max-w-screen-2xl mx-auto relative">
-          {/* MOBILE MENU BUTTON (Left) */}
-          <button
-            className="md:hidden text-2xl"
-            onClick={() => setSidebarOpen(true)}
-          >
-            <FaBars />
-          </button>
-
-          {/* LOGO (Centered) */}
-          <Link href="/" className="absolute left-1/2 transform -translate-x-1/2">
+        <div className="h-20 bg-white flex items-center justify-between px-10 max-md:px-6 max-lg:flex-col max-lg:gap-y-5 max-lg:justify-center max-lg:h-40 max-w-screen-2xl mx-auto relative">
+          {/* LOGO */}
+          <Link href="/">
             <img
               src="/logo v1 svg.svg"
-              width={120} // Smaller logo for mobile
-              height={120}
+              width={200}
+              height={200}
               alt="logo"
-              className="max-md:w-32" // Adjust logo size for mobile
+              className="max-md:w-40"
             />
           </Link>
 
@@ -84,31 +76,13 @@ const Header = () => {
             </Link>
           </div>
 
-          {/* RIGHT SIDE ICONS (Cart and Login/Register) */}
-          <div className="flex gap-x-4 items-center">
-            {/* Cart Icon (Resized for mobile) */}
-            <div className="max-md:scale-75">
-              <CartElement />
-            </div>
-
-            {/* Login/Register Icons (Resized for mobile) */}
-            {!session ? (
-              <div className="flex gap-x-2 max-md:scale-75">
-                <Link href="/login" className="flex items-center gap-x-1 font-semibold">
-                  <FaRegUser className="text-black" />
-                  <span className="max-lg:hidden">Login</span> {/* Hide text on mobile */}
-                </Link>
-              </div>
-            ) : (
-              <div className="flex items-center gap-x-2 max-md:scale-75">
-                <span className="text-base max-md:hidden">{session.user?.email}</span> {/* Hide email on mobile */}
-                <button onClick={handleLogout} className="flex items-center gap-x-1 font-semibold">
-                  <FaRegUser className="text-black" />
-                  <span className="max-md:hidden">Logout</span> {/* Hide text on mobile */}
-                </button>
-              </div>
-            )}
-          </div>
+          {/* MOBILE MENU BUTTON */}
+          <button
+            className="md:hidden text-2xl"
+            onClick={() => setSidebarOpen(true)}
+          >
+            <FaBars />
+          </button>
 
           {/* MOBILE SIDEBAR */}
           <div
@@ -148,6 +122,32 @@ const Header = () => {
               onClick={closeSidebar}
             ></div>
           )}
+
+          {/* RIGHT SIDE ICONS */}
+          <div className="flex gap-x-6 items-center">
+            <HeartElement wishQuantity={wishQuantity} />
+            <CartElement />
+            {!session ? (
+              <div className="flex gap-x-4">
+                <Link href="/login" className="flex items-center gap-x-2 font-semibold">
+                  <FaRegUser className="text-black" />
+                  <span>Login</span>
+                </Link>
+                <Link href="/register" className="flex items-center gap-x-2 font-semibold">
+                  <FaRegUser className="text-black" />
+                  <span>Register</span>
+                </Link>
+              </div>
+            ) : (
+              <div className="flex items-center gap-x-4">
+                <span className="text-base">{session.user?.email}</span>
+                <button onClick={handleLogout} className="flex items-center gap-x-2 font-semibold">
+                  <FaRegUser className="text-black" />
+                  <span>Logout</span>
+                </button>
+              </div>
+            )}
+          </div>
         </div>
       )}
     </header>
